@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.shape.Circle?>
+<?import javafx.scene.shape.Line?>
+<?import javafx.scene.shape.Rectangle?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+
+<AnchorPane fx:id="gamepane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="500.0" prefWidth="764.0" style="-fx-background-color: black;" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GamePanelController">
+   <children>
+      <Rectangle fx:id="bluerectangle" arcHeight="5.0" arcWidth="5.0" fill="#0d20ee" height="110.0" layoutY="180.0" stroke="BLACK" strokeType="INSIDE" style="-fx-fill: blue;" width="19.0" />
+      <Rectangle fx:id="redrectangle" arcHeight="5.0" arcWidth="5.0" fill="RED" height="110.0" layoutX="746.0" layoutY="180.0" stroke="BLACK" strokeType="INSIDE" width="19.0" />
+      <Circle fx:id="ball" fill="WHITE" layoutX="380.0" layoutY="250.0" radius="15.0" stroke="BLACK" strokeType="INSIDE" />
+      <Line endX="500.0" fill="WHITE" layoutX="131.0" layoutY="250.0" rotate="90.0" stroke="WHITE" />
+      <Text fx:id="playerbluescore" fill="WHITE" layoutX="239.0" layoutY="33.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Score " wrappingWidth="107.55078125">
+         <font>
+            <Font size="20.0" />
+         </font>
+      </Text>
+      <Text fx:id="playerredscore" fill="WHITE" layoutX="415.0" layoutY="33.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Score " textAlignment="RIGHT" wrappingWidth="107.55078125">
+         <font>
+            <Font size="20.0" />
+         </font>
+      </Text>
+   </children>
+</AnchorPane>
