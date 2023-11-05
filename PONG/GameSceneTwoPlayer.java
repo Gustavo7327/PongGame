@@ -3,8 +3,12 @@ package PONG;
 import java.io.File;
 import java.util.Random;
 
+import javafx.animation.AnimationTimer;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
+import javafx.beans.binding.BooleanBinding;
+import javafx.beans.property.BooleanProperty;
+import javafx.beans.property.SimpleBooleanProperty;
 import javafx.event.EventHandler;
 import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
@@ -22,7 +26,13 @@ import javafx.util.Duration;
 
 public class GameSceneTwoPlayer {
     
+    private BooleanProperty keyW = new SimpleBooleanProperty();
+    private BooleanProperty keyZ = new SimpleBooleanProperty();
+    private BooleanProperty keyUP = new SimpleBooleanProperty();
+    private BooleanProperty keyDOWN = new SimpleBooleanProperty();
+    private BooleanBinding keyPressed = keyW.or(keyZ).or(keyUP).or(keyDOWN);
     private boolean gameStarted = false;
+
     private int ballYSpeed = 1;
     private int ballXSpeed = 1;
     private double playerOneYPos = GameStart.GAME_HEIGHT / 2 - 50;
@@ -40,6 +50,29 @@ public class GameSceneTwoPlayer {
     File file = new File("PONG/Pongsong.mp3");
     private Media media = new Media(file.toURI().toString());
     private MediaPlayer mp = new MediaPlayer(media);
+
+    AnimationTimer at = new AnimationTimer(){
+
+        @Override
+        public void handle(long arg0) {
+            if(keyW.get()){
+                if(playerOneYPos > GameStart.GAME_HEIGHT - PLAYER_HEIGHT){
+                    
+                }
+                playerOneYPos -= 2;
+            }
+            if(keyZ.get()){
+                playerOneYPos += 2;
+            }
+            if(keyUP.get()){
+                playerTwoYPos -= 2;
+            }
+            if(keyDOWN.get()){
+                playerTwoYPos += 2;
+            }
+        }
+
+    };
 
     private void run(GraphicsContext gc){
         
@@ -100,40 +133,62 @@ public class GameSceneTwoPlayer {
         gc.fillRect(playerOneXPos,playerOneYPos,PLAYER_WIDTH,PLAYER_HEIGHT);
         gc.setFill(Color.RED);
         gc.fillRect(playerTwoXPos,playerTwoYPos,PLAYER_WIDTH,PLAYER_HEIGHT);
+
     }
 
+    private Scene scene;
     GameSceneTwoPlayer(){
         Canvas canvas = new Canvas(GameStart.GAME_WIDTH, GameStart.GAME_HEIGHT);
         GraphicsContext gc = canvas.getGraphicsContext2D();
         Timeline tl = new Timeline(new KeyFrame(Duration.millis(10), e->run(gc)));
         tl.setCycleCount(Timeline.INDEFINITE);
+        scene = new Scene(new StackPane(canvas));
         canvas.setOnMouseClicked(e -> gameStarted = true);
-        canvas.setOnKeyPressed(new EventHandler<KeyEvent>(){
-
-            @Override
-            public void handle(KeyEvent event) {
-                
-                if(event.getCode()== KeyCode.W){
-                    playerOneYPos -= 10;
-                    System.out.println("AAAA");
-                }
-                else if(event.getCode()== KeyCode.Z){
-                    playerOneYPos += 10;
-                }
-                else if(event.getCode()== KeyCode.UP){
-                    playerTwoYPos -= 10;
-                }
-                else if(event.getCode()== KeyCode.DOWN){
-                    playerTwoYPos += 10;
-                }    
-                    
+        scene.setOnKeyPressed( e -> {
+            if(e.getCode() == KeyCode.W){
+                keyW.set(true);
             }
-
+            if(e.getCode() == KeyCode.Z){
+                keyZ.set(true);
+            }
+            if(e.getCode() == KeyCode.UP){
+                keyUP.set(true);
+            }
+            if(e.getCode() == KeyCode.DOWN){
+                keyDOWN.set(true);
+            }
         });
+
+        scene.setOnKeyReleased( e -> {
+            if(e.getCode() == KeyCode.W){
+                keyW.set(false);
+            }
+            if(e.getCode() == KeyCode.Z){
+                keyZ.set(false);
+            }
+            if(e.getCode() == KeyCode.UP){
+                keyUP.set(false);
+            }
+            if(e.getCode() == KeyCode.DOWN){
+                keyDOWN.set(false);
+            }
+        });
+        keyPressed.addListener(((observableValue, aBoolean, t1) -> {
+            if(!aBoolean){
+                at.start();
+            } else{
+                at.stop();
+            }
+        }));
+
         Stage stage = new Stage();
         stage.setTitle("PONG GAME - TWO PLAYERS");
-        stage.setScene(new Scene(new StackPane(canvas)));
+        stage.setScene(scene);
         stage.show();
         tl.play();
+    }
+
+    private void move(){
+
     }
 }
