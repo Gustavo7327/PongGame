@@ -9,12 +9,10 @@ import javafx.animation.Timeline;
 import javafx.beans.binding.BooleanBinding;
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.SimpleBooleanProperty;
-import javafx.event.EventHandler;
 import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.input.KeyCode;
-import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.StackPane;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
@@ -55,23 +53,40 @@ public class GameSceneTwoPlayer {
 
         @Override
         public void handle(long arg0) {
-            if(keyW.get()){
-                if(playerOneYPos > GameStart.GAME_HEIGHT - PLAYER_HEIGHT){
-                    
-                }
-                playerOneYPos -= 2;
-            }
-            if(keyZ.get()){
-                playerOneYPos += 2;
-            }
-            if(keyUP.get()){
-                playerTwoYPos -= 2;
-            }
-            if(keyDOWN.get()){
-                playerTwoYPos += 2;
-            }
-        }
 
+            if(keyW.get()){
+                if(playerOneYPos < 0){
+                    playerOneYPos = playerOneYPos + 0;
+                } else{
+                    playerOneYPos -= 5;
+                }
+            }
+
+            if(keyZ.get()){
+                if(playerOneYPos > GameStart.GAME_HEIGHT - PLAYER_HEIGHT){
+                    playerOneYPos = playerOneYPos + 0;
+                } else{
+                    playerOneYPos += 5;
+                }
+            }
+
+            if(keyUP.get()){
+                if(playerTwoYPos < 0){
+                    playerTwoYPos = playerTwoYPos + 0;
+                } else{
+                    playerTwoYPos -= 5;
+                }
+            }
+
+            if(keyDOWN.get()){
+                if(playerTwoYPos > GameStart.GAME_HEIGHT - PLAYER_HEIGHT){
+                    playerTwoYPos = playerTwoYPos + 0;
+                } else{
+                    playerTwoYPos += 5;
+                } 
+            }
+
+        }
     };
 
     private void run(GraphicsContext gc){
@@ -186,9 +201,5 @@ public class GameSceneTwoPlayer {
         stage.setScene(scene);
         stage.show();
         tl.play();
-    }
-
-    private void move(){
-
     }
 }
