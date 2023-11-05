@@ -39,11 +39,12 @@ public class GamePanelController implements Initializable{
     private int redscore;
     private double ballYVelocity = 2.5;
     private double ballXVelocity = 5;
-    //private Random random = new Random();
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         gamepane.setOpacity(0);
+        bluescore = 0;
+        redscore = 0;
         fadeTransition = new FadeTransition();
         fadeTransition.setDuration(Duration.millis(1000));
         fadeTransition.setNode(gamepane);
@@ -52,17 +53,18 @@ public class GamePanelController implements Initializable{
         fadeTransition.play();
         playerbluescore.setText("Score "+bluescore);
         playerredscore.setText(redscore+" Score");
-        animation();
         
-    }
-    
-    private void animation(){
+        redrectangle.setOnMouseMoved(event ->{
+            redrectangle.setLayoutY(event.getScreenY());
+        });
+
         loop = new AnimationTimer() {
             double control = 0;
             @Override
             public void handle(long time) {
                 control += 0.15;
                 checkColissions();
+                
                 if(control > 1){
                     ball.setLayoutY(ball.getLayoutY()+ballYVelocity);
                     ball.setLayoutX(ball.getLayoutX()+ballXVelocity);
@@ -72,6 +74,7 @@ public class GamePanelController implements Initializable{
             
         };
         loop.start();
+        
     }
 
     private void checkColissions(){
@@ -81,17 +84,17 @@ public class GamePanelController implements Initializable{
             ballYVelocity *= -1.01;
             
 
-        } else if(bluerectangle.getBoundsInParent().intersects(ball.getBoundsInParent())){
+        } if(bluerectangle.getBoundsInParent().intersects(ball.getBoundsInParent())){
             ballXVelocity *= -1.01;
             ballYVelocity *= -1.01;
             
             
-        } else if(ball.getLayoutY() - ball.getRadius() < 0){
+        } if(ball.getLayoutY() - ball.getRadius() < 0){
             ballXVelocity *= -1.01;
             ballYVelocity *= -1.01;
             
 
-        } else if(ball.getLayoutY() + ball.getRadius() > 500){
+        } if(ball.getLayoutY() + ball.getRadius() > 500){
             ballXVelocity *= -1.01;
             ballYVelocity *= -1.01;
             
@@ -105,7 +108,7 @@ public class GamePanelController implements Initializable{
             ball.setLayoutY(250);
             
         } if(ball.getLayoutX() - ball.getRadius() < 0){
-            ballXVelocity = -5;
+            ballXVelocity = 5;
             ballYVelocity = 3;
             redscore++;
             playerredscore.setText(redscore+" Score");
