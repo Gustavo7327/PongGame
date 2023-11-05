@@ -99,7 +99,8 @@ public class GameSceneOnePlayer{
             ballYSpeed *= -1;
         }
 
-        gc.fillText("SCORE "+scoreP1+"\t\t\t\t\t\t\t\t"+scoreP2+" SCORE",GameStart.GAME_WIDTH/2, 100);
+        gc.strokeLine(GameStart.GAME_WIDTH/2,0,GameStart.GAME_WIDTH/2, GameStart.GAME_HEIGHT);
+        gc.fillText("SCORE "+scoreP1+"\t\t\t\t"+scoreP2+" SCORE",GameStart.GAME_WIDTH/2, 60);
         gc.setFill(Color.BLUE);
         gc.fillRect(playerOneXPos,playerOneYPos,PLAYER_WIDTH,PLAYER_HEIGHT);
         gc.setFill(Color.RED);

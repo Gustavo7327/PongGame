@@ -5,10 +5,12 @@ import java.util.Random;
 
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
+import javafx.event.EventHandler;
 import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.StackPane;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
@@ -92,7 +94,8 @@ public class GameSceneTwoPlayer {
             ballYSpeed *= -1;
         }
 
-        gc.fillText("SCORE "+scoreP1+"\t\t\t\t\t\t\t\t"+scoreP2+" SCORE",GameStart.GAME_WIDTH/2, 100);
+        gc.strokeLine(GameStart.GAME_WIDTH/2,0,GameStart.GAME_WIDTH/2, GameStart.GAME_HEIGHT);
+        gc.fillText("SCORE "+scoreP1+"\t\t\t\t"+scoreP2+" SCORE",GameStart.GAME_WIDTH/2, 60);
         gc.setFill(Color.BLUE);
         gc.fillRect(playerOneXPos,playerOneYPos,PLAYER_WIDTH,PLAYER_HEIGHT);
         gc.setFill(Color.RED);
@@ -105,35 +108,27 @@ public class GameSceneTwoPlayer {
         Timeline tl = new Timeline(new KeyFrame(Duration.millis(10), e->run(gc)));
         tl.setCycleCount(Timeline.INDEFINITE);
         canvas.setOnMouseClicked(e -> gameStarted = true);
-        canvas.setOnKeyReleased(e -> {
-            // if(e.getCode() == KeyCode.W){
-            //     playerOneYPos -= 10;
-            //     System.out.println("a");
-            // }
-            // if(e.getCode() == KeyCode.Z){
-            //     playerOneYPos += 10;
-            // }
-            // if(e.getCode() == KeyCode.UP){
-            //     playerTwoYPos -= 10;
-            // }
-            // if(e.getCode() == KeyCode.DOWN){
-            //     playerTwoYPos += 10;
-            // }
-            // KeyCode key = e.getCode();
-            // switch(key){
-            //     case W:
-            //     playerOneYPos -= 10;
-            //     break;
-            //     case Z:
-            //     playerOneYPos += 10;
-            //     break;
-            //     case UP:
-            //     playerTwoYPos -= 10;
-            //     break;
-            //     case DOWN:
-            //     playerTwoYPos += 10;
-            //     break;
-            // }
+        canvas.setOnKeyPressed(new EventHandler<KeyEvent>(){
+
+            @Override
+            public void handle(KeyEvent event) {
+                
+                if(event.getCode()== KeyCode.W){
+                    playerOneYPos -= 10;
+                    System.out.println("AAAA");
+                }
+                else if(event.getCode()== KeyCode.Z){
+                    playerOneYPos += 10;
+                }
+                else if(event.getCode()== KeyCode.UP){
+                    playerTwoYPos -= 10;
+                }
+                else if(event.getCode()== KeyCode.DOWN){
+                    playerTwoYPos += 10;
+                }    
+                    
+            }
+
         });
         Stage stage = new Stage();
         stage.setTitle("PONG GAME - TWO PLAYERS");
