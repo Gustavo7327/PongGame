@@ -12,14 +12,7 @@
             "projectName": "PongGame_febf77e",
             "vmArgs": "--module-path \"/home/guilherme/Downloads/javafx-sdk-20.0.2/lib/\" --add-modules javafx.controls,javafx.fxml,javafx.media"
         },
-        {
-            "type": "java",
-            "name": "Main",
-            "request": "launch",
-            "mainClass": "Main",
-            "projectName": "PongGame_febf77e",
-            "vmArgs": "--module-path \"/home/guilherme/Downloads/javafx-sdk-20.0.2/lib/\" --add-modules javafx.controls,javafx.fxml,javafx.media"
-        },
+        
         {
             "type": "java",
             "name": "Current File",

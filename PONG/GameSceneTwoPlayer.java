@@ -8,6 +8,7 @@ import javafx.animation.Timeline;
 import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
+import javafx.scene.input.KeyCode;
 import javafx.scene.layout.StackPane;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
@@ -17,8 +18,8 @@ import javafx.scene.text.TextAlignment;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 
-public class GameSceneOnePlayer{
-
+public class GameSceneTwoPlayer {
+    
     private boolean gameStarted = false;
     private int ballYSpeed = 1;
     private int ballXSpeed = 1;
@@ -38,7 +39,6 @@ public class GameSceneOnePlayer{
     private Media media = new Media(file.toURI().toString());
     private MediaPlayer mp = new MediaPlayer(media);
 
-
     private void run(GraphicsContext gc){
         
         gc.setFill(Color.BLACK);
@@ -51,13 +51,6 @@ public class GameSceneOnePlayer{
 
             ballXPos+=ballXSpeed;
             ballYPos+=ballYSpeed;
-
-            if(ballXPos < GameStart.GAME_WIDTH - GameStart.GAME_WIDTH/4){
-                playerTwoYPos = ballYPos - PLAYER_HEIGHT/2;
-
-            } else{
-                playerTwoYPos = ballYPos > playerTwoYPos + PLAYER_HEIGHT / 2 ?playerTwoYPos +=1: playerTwoYPos - 1;
-            }
             
             gc.fillOval(ballXPos, ballYPos, BALL_R, BALL_R);
 
@@ -106,18 +99,46 @@ public class GameSceneOnePlayer{
         gc.fillRect(playerTwoXPos,playerTwoYPos,PLAYER_WIDTH,PLAYER_HEIGHT);
     }
 
-    GameSceneOnePlayer(){
+    GameSceneTwoPlayer(){
         Canvas canvas = new Canvas(GameStart.GAME_WIDTH, GameStart.GAME_HEIGHT);
         GraphicsContext gc = canvas.getGraphicsContext2D();
         Timeline tl = new Timeline(new KeyFrame(Duration.millis(10), e->run(gc)));
         tl.setCycleCount(Timeline.INDEFINITE);
-        canvas.setOnMouseMoved(e -> playerOneYPos = e.getY());
         canvas.setOnMouseClicked(e -> gameStarted = true);
+        canvas.setOnKeyReleased(e -> {
+            // if(e.getCode() == KeyCode.W){
+            //     playerOneYPos -= 10;
+            //     System.out.println("a");
+            // }
+            // if(e.getCode() == KeyCode.Z){
+            //     playerOneYPos += 10;
+            // }
+            // if(e.getCode() == KeyCode.UP){
+            //     playerTwoYPos -= 10;
+            // }
+            // if(e.getCode() == KeyCode.DOWN){
+            //     playerTwoYPos += 10;
+            // }
+            // KeyCode key = e.getCode();
+            // switch(key){
+            //     case W:
+            //     playerOneYPos -= 10;
+            //     break;
+            //     case Z:
+            //     playerOneYPos += 10;
+            //     break;
+            //     case UP:
+            //     playerTwoYPos -= 10;
+            //     break;
+            //     case DOWN:
+            //     playerTwoYPos += 10;
+            //     break;
+            // }
+        });
         Stage stage = new Stage();
-        stage.setTitle("PONG GAME - ONE PLAYER");
+        stage.setTitle("PONG GAME - TWO PLAYERS");
         stage.setScene(new Scene(new StackPane(canvas)));
         stage.show();
         tl.play();
     }
-
 }

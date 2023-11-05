@@ -53,7 +53,7 @@ public class GameStart extends Application{
         pane.setStyle("-fx-background-color: #1B1818;");
         pane.getChildren().addAll(buttonPlayOne, buttonPlayTwo, buttonSettings, titleText);
 
-        stage.setTitle("PONG GAME");
+        stage.setTitle("PONG GAME - MENU");
         stage.setScene(new Scene(pane, GAME_WIDTH, GAME_HEIGHT));
         stage.show();
 
@@ -63,7 +63,7 @@ public class GameStart extends Application{
         });
 
         buttonPlayTwo.setOnAction(e -> {
-            new GameSceneOnePlayer();
+            new GameSceneTwoPlayer();
             stage.close();
         });
     }
