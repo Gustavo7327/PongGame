@@ -1,5 +1,6 @@
 package PONG;
 
+import java.io.File;
 import java.util.Random;
 
 import javafx.animation.KeyFrame;
@@ -8,6 +9,8 @@ import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.layout.StackPane;
+import javafx.scene.media.Media;
+import javafx.scene.media.MediaPlayer;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.TextAlignment;
@@ -30,6 +33,11 @@ public class GameSceneOnePlayer{
     private static final int PLAYER_WIDTH = 15;
     private static final int PLAYER_HEIGHT = 100;
     private static final double BALL_R = 15;
+
+    File file = new File("Pongsong.mp3");
+    private Media media = new Media(file.toURI().toString());
+    private MediaPlayer mp = new MediaPlayer(media);
+
 
     private void run(GraphicsContext gc){
         
@@ -66,7 +74,11 @@ public class GameSceneOnePlayer{
 
         }
         
-        if(ballYPos > GameStart.GAME_HEIGHT || ballYPos < 0){ ballYSpeed *= -1;}
+        if(ballYPos > GameStart.GAME_HEIGHT || ballYPos < 0){ 
+            ballYSpeed *= -1;
+            mp.play();
+            mp.seek(Duration.ZERO);
+        }
 
         if(ballXPos < playerOneXPos - PLAYER_WIDTH){
             scoreP2++;
@@ -79,13 +91,15 @@ public class GameSceneOnePlayer{
         }
 
         if((ballXPos + BALL_R > playerTwoXPos) && ballYPos >= playerTwoYPos && ballYPos <= playerTwoYPos + PLAYER_HEIGHT || ((ballXPos < playerOneXPos + PLAYER_WIDTH) && ballYPos >= playerOneYPos && ballYPos <= playerOneYPos + PLAYER_HEIGHT)){
+            mp.play();
+            mp.seek(Duration.ZERO);
             ballYSpeed += 1 * Math.signum(ballYSpeed);
             ballXSpeed += 1 * Math.signum(ballXSpeed);
             ballXSpeed *= -1;
             ballYSpeed *= -1;
         }
 
-        gc.fillText("SCORE "+scoreP1+"\t\t\t\t\t\t\t\t"+scoreP2+" Score",GameStart.GAME_WIDTH/2, 100);
+        gc.fillText("SCORE "+scoreP1+"\t\t\t\t\t\t\t\t"+scoreP2+" SCORE",GameStart.GAME_WIDTH/2, 100);
 
         gc.fillRect(playerOneXPos,playerOneYPos,PLAYER_WIDTH,PLAYER_HEIGHT);
         gc.fillRect(playerTwoXPos,playerTwoYPos,PLAYER_WIDTH,PLAYER_HEIGHT);
@@ -98,7 +112,6 @@ public class GameSceneOnePlayer{
         tl.setCycleCount(Timeline.INDEFINITE);
         canvas.setOnMouseMoved(e -> playerOneYPos = e.getY());
         canvas.setOnMouseClicked(e -> gameStarted = true);
-
         Stage stage = new Stage();
         stage.setScene(new Scene(new StackPane(canvas)));
         stage.show();
