@@ -1,6 +1,5 @@
 package PONG;
 
-import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.layout.Pane;
@@ -10,13 +9,12 @@ import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
-public class GameStart extends Application{
+public class GameStart{
 
     public static final int GAME_WIDTH = 800;
     public static final int GAME_HEIGHT = 600;
     
-    @Override
-    public void start(Stage stage) throws Exception {
+    GameStart(){
 
         Button buttonPlayOne = new Button("1P PLAYER");
         buttonPlayOne.setFont(new Font(20));
@@ -32,7 +30,7 @@ public class GameStart extends Application{
         buttonPlayTwo.setLayoutY(378);
         buttonPlayTwo.setLayoutX(260);
 
-        Button buttonSettings = new Button("SETTINGS");
+        Button buttonSettings = new Button("HOW TO PLAY");
         buttonSettings.setFont(new Font(20));
         buttonSettings.setPrefHeight(40);
         buttonSettings.setPrefWidth(280);
@@ -53,23 +51,25 @@ public class GameStart extends Application{
         pane.setStyle("-fx-background-color: #1B1818;");
         pane.getChildren().addAll(buttonPlayOne, buttonPlayTwo, buttonSettings, titleText);
 
+        Stage stage = new Stage();
         stage.setTitle("PONG GAME - MENU");
         stage.setScene(new Scene(pane, GAME_WIDTH, GAME_HEIGHT));
         stage.show();
 
-        buttonPlayOne.setOnAction(event ->{
+        buttonPlayOne.setOnAction(event -> {
             new GameSceneOnePlayer();
             stage.close();
         });
 
-        buttonPlayTwo.setOnAction(e -> {
+        buttonPlayTwo.setOnAction(event -> {
             new GameSceneTwoPlayer();
+            stage.close();
+        });
+
+        buttonSettings.setOnAction(event -> {
+            new GameSettings();
             stage.close();
         });
     }
 
-
-    public static void main(String[] args) {
-        launch(args);
-    }
 }

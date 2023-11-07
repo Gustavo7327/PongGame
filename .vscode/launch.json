@@ -6,9 +6,9 @@
     "configurations": [
         {
             "type": "java",
-            "name": "GameStart",
+            "name": "Main",
             "request": "launch",
-            "mainClass": "PONG.GameStart",
+            "mainClass": "PONG.Main",
             "projectName": "PongGame_febf77e",
             "vmArgs": "--module-path \"/home/guilherme/Downloads/javafx-sdk-20.0.2/lib/\" --add-modules javafx.controls,javafx.fxml,javafx.media"
         },
