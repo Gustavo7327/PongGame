@@ -21,14 +21,14 @@ public class GameStart{
     
     GameStart(){
 
-        Button buttonPlayOne = new Button("1P PLAYER");
+        Button buttonPlayOne = new Button("SINGLE PLAYER");
         buttonPlayOne.setFont(new Font(20));
         buttonPlayOne.setPrefHeight(40);
         buttonPlayOne.setPrefWidth(280);
         buttonPlayOne.setLayoutY(316);
         buttonPlayOne.setLayoutX(260);
 
-        Button buttonPlayTwo = new Button("2P PLAYER");
+        Button buttonPlayTwo = new Button("TWO PLAYER");
         buttonPlayTwo.setFont(new Font(20));
         buttonPlayTwo.setPrefHeight(40);
         buttonPlayTwo.setPrefWidth(280);
@@ -52,9 +52,19 @@ public class GameStart{
         titleText.setLayoutX(309);
         titleText.setLayoutY(158);
 
+        Text creatorText = new Text();
+        creatorText.setFont(new Font(25));
+        creatorText.setText("By Gustavo7327");
+        creatorText.setFill(Color.WHITE);
+        creatorText.setScaleX(1);
+        creatorText.setScaleY(1);
+        creatorText.setStrokeType(StrokeType.OUTSIDE);
+        creatorText.setLayoutX(300);
+        creatorText.setLayoutY(200);
+
         Pane pane = new Pane();
         pane.setStyle("-fx-background-color: #1B1818;");
-        pane.getChildren().addAll(buttonPlayOne, buttonPlayTwo, buttonSettings, titleText);
+        pane.getChildren().addAll(buttonPlayOne, buttonPlayTwo, buttonSettings, titleText, creatorText);
 
         pane.setOpacity(0);
         fadeTransition = new FadeTransition();

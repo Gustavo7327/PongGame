@@ -125,7 +125,7 @@ public class GameSceneOnePlayer{
         canvas.setOnMouseMoved(e -> playerOneYPos = e.getY());
         canvas.setOnMouseClicked(e -> gameStarted = true);
         Stage stage = new Stage();
-        stage.setTitle("PONG GAME - ONE PLAYER");
+        stage.setTitle("PONG GAME - SINGLE PLAYER");
         stage.setScene(new Scene(new StackPane(canvas)));
         stage.show();
         tl.play();
