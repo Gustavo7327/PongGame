@@ -4,6 +4,7 @@ import java.io.File;
 import java.util.Random;
 
 import javafx.animation.AnimationTimer;
+import javafx.animation.FadeTransition;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.beans.binding.BooleanBinding;
@@ -152,8 +153,17 @@ public class GameSceneTwoPlayer {
     }
 
     private Scene scene;
+    private FadeTransition fadeTransition;
+    
     GameSceneTwoPlayer(){
         Canvas canvas = new Canvas(GameStart.GAME_WIDTH, GameStart.GAME_HEIGHT);
+        canvas.setOpacity(0);
+        fadeTransition = new FadeTransition();
+        fadeTransition.setDuration(Duration.millis(1000));
+        fadeTransition.setNode(canvas);
+        fadeTransition.setFromValue(0);
+        fadeTransition.setToValue(1);
+        fadeTransition.play();
         GraphicsContext gc = canvas.getGraphicsContext2D();
         Timeline tl = new Timeline(new KeyFrame(Duration.millis(10), e->run(gc)));
         tl.setCycleCount(Timeline.INDEFINITE);

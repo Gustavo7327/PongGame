@@ -1,5 +1,8 @@
 package PONG;
 
+import javafx.animation.FadeTransition;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.layout.Pane;
@@ -8,11 +11,13 @@ import javafx.scene.shape.StrokeType;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
+import javafx.util.Duration;
 
 public class GameStart{
 
     public static final int GAME_WIDTH = 800;
     public static final int GAME_HEIGHT = 600;
+    private FadeTransition fadeTransition;
     
     GameStart(){
 
@@ -51,24 +56,71 @@ public class GameStart{
         pane.setStyle("-fx-background-color: #1B1818;");
         pane.getChildren().addAll(buttonPlayOne, buttonPlayTwo, buttonSettings, titleText);
 
+        pane.setOpacity(0);
+        fadeTransition = new FadeTransition();
+        fadeTransition.setDuration(Duration.millis(1000));
+        fadeTransition.setNode(pane);
+        fadeTransition.setFromValue(0);
+        fadeTransition.setToValue(1);
+        fadeTransition.play();
+
         Stage stage = new Stage();
         stage.setTitle("PONG GAME - MENU");
         stage.setScene(new Scene(pane, GAME_WIDTH, GAME_HEIGHT));
         stage.show();
 
         buttonPlayOne.setOnAction(event -> {
-            new GameSceneOnePlayer();
-            stage.close();
+            fadeTransition = new FadeTransition();
+            fadeTransition.setDuration(Duration.millis(1000));
+            fadeTransition.setNode(pane);
+            fadeTransition.setFromValue(1);
+            fadeTransition.setToValue(0);
+            fadeTransition.setOnFinished(new EventHandler<ActionEvent>() {
+
+            @Override
+            public void handle(ActionEvent arg0) {
+                new GameSceneOnePlayer();
+                stage.close();
+            }
+        }); 
+            fadeTransition.play();
+            
         });
 
         buttonPlayTwo.setOnAction(event -> {
-            new GameSceneTwoPlayer();
-            stage.close();
+            fadeTransition = new FadeTransition();
+            fadeTransition.setDuration(Duration.millis(1000));
+            fadeTransition.setNode(pane);
+            fadeTransition.setFromValue(1);
+            fadeTransition.setToValue(0);
+            fadeTransition.setOnFinished(new EventHandler<ActionEvent>() {
+
+            @Override
+            public void handle(ActionEvent arg0) {
+                new GameSceneTwoPlayer();
+                stage.close();
+            }
+        }); 
+            fadeTransition.play();
+            
         });
 
         buttonSettings.setOnAction(event -> {
-            new GameSettings();
-            stage.close();
+            fadeTransition = new FadeTransition();
+            fadeTransition.setDuration(Duration.millis(1000));
+            fadeTransition.setNode(pane);
+            fadeTransition.setFromValue(1);
+            fadeTransition.setToValue(0);
+            fadeTransition.setOnFinished(new EventHandler<ActionEvent>() {
+
+            @Override
+            public void handle(ActionEvent arg0) {
+                new GameSettings();
+                stage.close();
+            }
+        }); 
+            fadeTransition.play();
+            
         });
     }
 
